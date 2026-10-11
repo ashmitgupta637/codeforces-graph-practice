@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Codeforces Graph Practice Hub</title>
+<style>
+:root{--bg:#f7f7f4;--card:#fff;--tx:#1d1d1b;--mu:#6b6b66;--bd:#e2e2dc;--ac:#2f5bea;--ok:#1f9d55;--E:#1f9d55;--M:#c27c0e;--H:#d23b3b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--card:#1e2026;--tx:#ecece8;--mu:#9a9a94;--bd:#2f313a;--ac:#7b9cff;--ok:#4cc77f;--E:#4cc77f;--M:#e0a84a;--H:#ff7a7a}}
+:root[data-theme="dark"]{--bg:#15161a;--card:#1e2026;--tx:#ecece8;--mu:#9a9a94;--bd:#2f313a;--ac:#7b9cff;--ok:#4cc77f;--E:#4cc77f;--M:#e0a84a;--H:#ff7a7a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 -apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:26px;margin:0 0 4px}.sub{color:var(--mu);margin:0 0 14px}
+.bar{height:8px;background:var(--bd);border-radius:8px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+input,select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 10px}
+input[type=search]{flex:1 1 200px}button{cursor:pointer}button:hover{border-color:var(--ac)}
+h2{margin:26px 0 8px;font-size:19px}h2 small{color:var(--mu);font-weight:400;font-size:13px}
+.row{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-bottom:6px}
+.row.done{opacity:.5}.row input{width:18px;height:18px;flex:none}
+.m{flex:1;min-width:0}.t{font-weight:600}.t em{font-style:normal;color:var(--mu);font-weight:400;font-size:13px;margin-left:6px}
+.tg{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px;font-size:12px}
+.tg span{border:1px solid var(--bd);border-radius:6px;padding:0 7px;color:var(--mu)}
+.rt{font-weight:700;font-size:13px;min-width:42px;text-align:right}
+.E{color:var(--E)}.M{color:var(--M)}.H{color:var(--H)}
+.go{white-space:nowrap;text-decoration:none;background:var(--ac);color:#fff;padding:6px 12px;border-radius:8px;font-size:14px}
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.res a,.g div{display:block;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;color:var(--tx);text-decoration:none;font-size:14px}
+.res small,.g small{display:block;color:var(--mu)}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px}
+.note{color:var(--mu);font-size:13px;margin-top:24px}
+@media(max-width:560px){.row{flex-wrap:wrap}.go{margin-left:30px}}
+</style></head><body><div class="w">
+<h1>⚔️ Codeforces Graph Practice Hub</h1>
+<p class="sub">Codeforces-only graph problems, sorted Easy → Medium → Hard, tagged by technique. Progress saves in your browser.</p>
+<div id="pt"></div><div class="bar"><i id="pb"></i></div>
+<div class="ctl">
+<input type="search" id="q" placeholder="Search by name or ID...">
+<select id="k"><option value="">All techniques</option></select>
+<select id="s"><option value="">All status</option><option value="t">To do</option><option value="d">Solved</option></select>
+<button id="r">🎲 Random unsolved</button></div>
+<div id="L"></div>
+<h2>Techniques to know for OAs</h2>
+<div class="g" id="G"></div>
+<h2>Want even more? Codeforces filters</h2>
+<div class="res" id="R"></div>
+<p class="note">✓ = confirmed in curated Codeforces blogs (credits above). Other entries come from well-known Codeforces graph problems; ratings are approximate and can change, so check that the title matches when you open a link. Sections: Easy ≤ 1500, Medium 1600–1900, Hard ≥ 2000.</p>
+</div>
+<script>
+// id|title|rating|techniques|v=verified
+const D=`1944A|Destroying Bridges|800|Graph basics|v
+1598A|Computer Game|800|BFS,DP|v
+1797A|Li Hua and Maze|800|Grid,Implementation|v
+1843C|Sum in Binary Tree|800|Tree|v
+939A|Love Triangle|800|Graph basics|v
+115A|Party|900|Forest depth,DFS|v
+116C|Party|900|Forest depth,DFS|v
+500A|New Year Transportation|1000|DFS|v
+727A|Transformation: from A to B|1000|DFS,Backtracking|v
+1020B|Badge|1000|Functional graph|v
+1324C|Frog Jumps|1100|DFS,Greedy|v
+445A|DZY Loves Chessboard|1200|Grid,DFS|v
+217A|Ice Skating|1200|DSU,DFS|v
+893C|Rumor|1300|DFS,Components|v
+1638C|Inversion Graph|1300|Components|v
+1970C1|Game on Tree (Easy)|1300|Tree,Game|v
+429A|Xor Tree|1300|Tree,DFS|
+1581B|Diameter of Graph|1300|Graph basics|v
+1143C|Queen|1400|Tree|v
+520B|Two Buttons|1400|BFS|v
+24A|Ring road|1400|Cycle|
+475B|Strongly Connected City|1400|SCC|
+277A|Learning Languages|1400|DSU,Components|
+505B|Mr. Kitayuta's Colorful Graph|1400|DSU,DFS|
+920C|Swap Adjacent Elements|1400|DSU,Components|
+1167C|News Distribution|1400|DSU|
+580C|Kefa and Park|1500|Tree,DFS|v
+977E|Cyclic Components|1500|Cycle,Components|v
+982C|Cut 'em all!|1500|Tree,DFS|
+862B|Mahmoud and Ehab and the bipartiteness|1500|Bipartite|
+689B|Mike and Shortcuts|1500|BFS|
+501C|Misha and Forest|1500|Tree,Leaf peeling|
+1325C|Ehab and Path-etic MEXs|1500|Tree|
+377A|Maze|1600|BFS,Grid|v
+601A|The Two Routes|1600|BFS|v
+510C|Fox and Names|1600|Topological sort|
+739B|Alyona and the Tree|1600|Tree,Binary lifting|
+1144F|Graph Without Long Directed Paths|1700|Bipartite|v
+1093D|Beautiful Graph|1700|Bipartite|v
+1970C2|Game on Tree (Medium)|1700|Tree,Game|v
+598D|Igor In the Museum|1700|Grid,DFS|
+1037D|Valid BFS?|1700|BFS|v
+1106D|Lunar New Year and a Wander|1700|DFS,Greedy|
+1176E|Cover it!|1700|Bipartite,BFS|
+1573C|Book|1700|Topological sort,DP|v
+1559D1|Mocha and Diana (Easy)|1700|DSU|v
+1549C|Web of Lies|1700|Graph basics|v
+292D|Connected Components|1700|DSU|
+427C|Checkposts|1700|SCC|
+173B|Chamber of Secrets|1700|0-1 BFS,Grid|
+1118F1|Tree Cutting (Easy)|1800|Tree DP|
+1213G|Path Queries|1800|DSU|v
+1328D|Carousel|1800|Cycle,Coloring|v
+1534D|Lost Tree|1800|Tree,Bipartite|v
+1092F|Tree with Maximum Cost|1800|Rerooting|
+1324F|Maximum White Subtree|1800|Rerooting,Tree DP|
+721C|Journey|1800|DAG DP|
+954D|Fight Against Traffic|1800|BFS|
+1245D|Shichikuji and Power Grid|1800|MST|
+1076D|Edge Deletion|1800|Dijkstra|
+242C|King's Path|1800|BFS,Grid|
+25D|Roads not only in Berland|1900|DSU|v
+20C|Dijkstra?|1900|Dijkstra|
+1272E|Nearest Opposite Parity|1900|Multi-source BFS|
+1307D|Cow and Fields|1900|BFS,Greedy|
+1363E|Tree Shuffling|1900|Tree DP|
+22C|System Administrator|1900|Tree|
+191C|Fools and Roads|1900|LCA|
+645D|Robot Rapping Results Report|1900|Topological sort|
+1454E|Number of Simple Paths|2000|Cycle,Combinatorics|v
+766D|Mahmoud and a Dictionary|2000|DSU|v
+1385E|Directing Edges|2000|Topological sort|
+1005F|Berland and the Shortest Paths|2000|BFS|
+1294F|Three Paths on a Tree|2000|Tree,Diameter|
+545E|Paths and Trees|2000|Dijkstra|
+59E|Shortest Path|2000|Graph modelling,BFS|
+1108F|MST Unification|2000|MST|
+118E|Bertown roads|2000|Bridges|
+519E|A and B and Lecture Rooms|2000|LCA|
+776D|The Door Problem|2000|2-SAT,DSU|
+449B|Jzzhu and Cities|2000|Dijkstra|
+1472G|Moving to the Capital|2000|BFS,DAG DP|
+1325F|Ehab's Last Theorem|2000|DFS tree,Cycle|
+796D|Police Station|2100|Multi-source BFS|v
+1187E|Tree Painting|2100|Rerooting|
+1433G|Reducing Delivery Cost|2100|Dijkstra|
+609E|Minimum spanning tree for each edge|2100|MST,LCA|
+1000E|We Need More Bosses|2100|Bridges,Diameter|
+702E|Analysis of Pathes in Functional Graph|2100|Binary lifting,Functional graph|
+337D|Book of Evil|2100|Tree,Diameter|
+723E|One-Way Reform|2100|Euler path|
+1391E|Pairs of Pairs|2100|DFS tree|
+1029E|Tree with Small Distances|2100|Tree,Greedy|
+160D|Edges in MST|2200|MST,Bridges|
+570D|Tree Requests|2200|Tree,DFS|
+715B|Complete The Graph|2300|Dijkstra|
+786B|Legacy|2300|Dijkstra,Segment tree|
+1051F|The Shortest Statement|2400|Dijkstra,LCA|
+1473E|Minimum Path|2400|Graph modelling,Dijkstra|
+1361C|Johnny and Megan's Necklace|2500|Euler path|
+1215F|Radio Stations|2500|2-SAT|
+733F|Drivers Dissatisfaction|2600|MST|
+732F|Tourist Reform|2600|Bridges|
+700C|Break Up|2800|Bridges`.split("\n").map(l=>{const p=l.split("|"),m=p[0].match(/^(\d+)([A-Z]\d?)$/);return{id:p[0],n:p[1],r:+p[2],t:p[3].split(","),v:!!p[4],u:`https://codeforces.com/problemset/problem/${m[1]}/${m[2]}`}});
+const G=[["BFS / Multi-source BFS","Shortest path in unweighted graph or grid; 'minimum steps/minutes'. Start from all sources at once."],["DFS & Tree DFS","Components, cycle detection, subtree values, parent/depth arrays. Use iterative DFS for n≥1e5."],["DSU (Union-Find)","Dynamic connectivity, 'merge groups', offline queries sorted by weight."],["Dijkstra / 0-1 BFS","Weighted shortest paths; 0-1 BFS when weights are only 0/1."],["Graph modelling","Add state to the node, e.g. (node, parity/used-coupon/previous edge), then run BFS/Dijkstra."],["Topological sort","Dependencies, ordering, DP on DAG, cycle check via Kahn's algorithm."],["Bipartite / 2-colouring","'Split into two groups', odd cycle means impossible."],["MST (Kruskal/Prim)","Connect everything at min cost; pair with DSU; edge-in-MST queries."],["Rerooting & tree DP","Compute answer for every root in O(n) with two DFS passes."],["LCA & binary lifting","Path queries on trees, k-th ancestor, functional graphs."],["Bridges / SCC / 2-SAT","Tarjan low-link, condensation DAG, boolean constraints as implication graph."],["Euler path","Use each edge once; check degrees, Hierholzer's algorithm."]];
+const RS=[["All graph problems, 800–1200","https://codeforces.com/problemset?tags=graphs,800-1200"],["Graphs, 1300–1600","https://codeforces.com/problemset?tags=graphs,1300-1600"],["Graphs, 1700–2000","https://codeforces.com/problemset?tags=graphs,1700-2000"],["Shortest paths","https://codeforces.com/problemset?tags=shortest+paths"],["DFS and similar","https://codeforces.com/problemset?tags=dfs+and+similar"],["DSU","https://codeforces.com/problemset?tags=dsu"],["Trees","https://codeforces.com/problemset?tags=trees"],["Graph blog: Playlist","https://codeforces.com/blog/entry/91329"],["Blog: Basic graph problems","https://codeforces.com/topic/131522/en7"],["Blog: Shortest path modelling","https://codeforces.com/blog/entry/45897"]];
+const $=i=>document.getElementById(i);let S={};
+try{S=JSON.parse(localStorage.getItem("cfg")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("cfg",JSON.stringify(S))}catch(e){}};
+[...new Set(D.flatMap(x=>x.t))].sort().forEach(t=>$("k").add(new Option(t,t)));
+$("G").innerHTML=G.map(g=>`<div><b>${g[0]}</b><small>${g[1]}</small></div>`).join("");
+$("R").innerHTML=RS.map(r=>`<a href="${r[1]}" target="_blank" rel="noopener">${r[0]}</a>`).join("");
+const lvl=r=>r<=1500?["Easy","E"]:r<=1900?["Medium","M"]:["Hard","H"];
+function vis(){const q=$("q").value.toLowerCase(),k=$("k").value,s=$("s").value;return D.filter(x=>(!q||x.n.toLowerCase().includes(q)||x.id.toLowerCase().includes(q))&&(!k||x.t.includes(k))&&(!s||(s==="d")===!!S[x.id]))}
+function draw(){const v=vis();let h="";
+["Easy","Medium","Hard"].forEach(L=>{const a=v.filter(x=>lvl(x.r)[0]===L);if(!a.length)return;const n=D.filter(x=>lvl(x.r)[0]===L),d=n.filter(x=>S[x.id]).length;
+h+=`<h2>${L} <small>${d}/${n.length} solved · showing ${a.length}</small></h2>`+a.map(x=>`<div class="row ${S[x.id]?"done":""}"><input type="checkbox" data-id="${x.id}" ${S[x.id]?"checked":""}><div class="m"><div class="t">${x.n}<em>CF ${x.id}${x.v?" ✓":""}</em></div><div class="tg">${x.t.map(t=>`<span>${t}</span>`).join("")}</div></div><div class="rt ${lvl(x.r)[1]}">${x.r}</div><a class="go" href="${x.u}" target="_blank" rel="noopener">Solve ↗</a></div>`).join("")});
+$("L").innerHTML=h||"<p class='sub'>No problems match.</p>";
+const d=D.filter(x=>S[x.id]).length;$("pt").textContent=d+" / "+D.length+" solved";$("pb").style.width=d/D.length*100+"%"}
+$("L").onchange=e=>{S[e.target.dataset.id]=e.target.checked;save();draw()};
+["q","k","s"].forEach(i=>$(i).oninput=draw);
+$("r").onclick=()=>{const u=vis().filter(x=>!S[x.id]);if(u.length)window.open(u[Math.floor(Math.random()*u.length)].u,"_blank","noopener")};
+draw();
+</script></body></html>
